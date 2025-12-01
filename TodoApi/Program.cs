@@ -4,8 +4,11 @@ using TodoApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = Environment.GetEnvironmentVariable("ToDoDB");
+connectionString ??= builder.Configuration.GetConnectionString("ToDoDB");
+
 builder.Services.AddDbContext<ToDoDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("ToDoDB"),
+    options.UseMySql(connectionString,
         new MySqlServerVersion(new Version(8,0,39))));
 
 builder.Services.AddCors(options =>
