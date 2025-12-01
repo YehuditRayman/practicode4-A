@@ -26,11 +26,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseCors("AllowAll");
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 app.MapGet("/items", async (ToDoDbContext db) => await db.Items.ToListAsync());
 
 app.MapPost("/items", async (ToDoDbContext db, Item newItem) =>
@@ -67,6 +67,6 @@ app.MapDelete("/items/{id}", async (ToDoDbContext db, int id) =>
     return Results.NoContent();
 });
 
-
+app.MapGet("/", ()=>"The server is running");
 
 app.Run();
