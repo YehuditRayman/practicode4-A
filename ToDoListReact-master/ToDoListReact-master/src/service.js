@@ -1,14 +1,14 @@
 import axios from 'axios';
-axios.defaults.baseURL = "http://localhost:5216";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const service = {
   getTasks: async () => {
-    const result = await axios.get("/items");
+    const result = await axios.get("/Items");
     return result.data;
   },
 
   addTask: async (name) => {
-    const result = await axios.post("/items", {
+    const result = await axios.post("/Items", {
       name: name,
       isComplete: false
     });
@@ -17,7 +17,7 @@ const service = {
 
   setCompleted: async (id, name, isComplete) => {
     const result = await axios.put(
-      `/items/${id}`,
+      `/Items/${id}`,
       { name: name, isComplete: isComplete },
       { headers: { "Content-Type": "application/json" } } // 💥 חובה
     );
@@ -25,7 +25,7 @@ const service = {
   },
 
   deleteTask: async (id) => {
-    const result = await axios.delete(`/items/${id}`);
+    const result = await axios.delete(`/Items/${id}`);
     return result.data;
   }
 };
