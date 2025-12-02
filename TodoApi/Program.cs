@@ -31,17 +31,17 @@ app.UseCors("AllowAll");
     app.UseSwagger();
     app.UseSwaggerUI();
 // }
-app.MapGet("/items", async (ToDoDbContext db) => await db.Items.ToListAsync());
+app.MapGet("/Items", async (ToDoDbContext db) => await db.Items.ToListAsync());
 
-app.MapPost("/items", async (ToDoDbContext db, Item newItem) =>
+app.MapPost("/Items", async (ToDoDbContext db, Item newItem) =>
 {
     db.Items.Add(newItem);
     await db.SaveChangesAsync();
-    return Results.Created($"/items/{newItem.Id}", newItem);
+    return Results.Created($"/Items/{newItem.Id}", newItem);
 });
 
 // PUT – עדכון ✔️ בלבד
-app.MapPut("/items/{id}", async (ToDoDbContext db, int id, [FromBody] Item updatedItem) =>
+app.MapPut("/Items/{id}", async (ToDoDbContext db, int id, [FromBody] Item updatedItem) =>
 {
     Console.WriteLine($"PUT → id={id}, name={updatedItem.Name}, isComplete={updatedItem.IsComplete}");
 
@@ -56,7 +56,7 @@ app.MapPut("/items/{id}", async (ToDoDbContext db, int id, [FromBody] Item updat
 });
 
 
-app.MapDelete("/items/{id}", async (ToDoDbContext db, int id) =>
+app.MapDelete("/Items/{id}", async (ToDoDbContext db, int id) =>
 {
     var item = await db.Items.FindAsync(id);
     if (item is null) return Results.NotFound();
